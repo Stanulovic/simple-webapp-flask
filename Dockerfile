@@ -1,14 +1,16 @@
-FROM public.ecr.aws/docker/library/ubuntu:20.04
+FROM python:3.11-slim
 
-RUN apt-get update \
- && apt-get install -y python3 python3-pip \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-WORKDIR /opt
-COPY app.py .
+# (opciono) sistemski alati ako želiš curl za healthcheck:
+# RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-# Instaliraj Flask (ili requirements.txt ako ga imaš)
-RUN pip3 install --no-cache-dir flask
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Ako app.py koristi app.run(...), ne treba nam Flask CLI
+COPY . .
 EXPOSE 8080
+ENV PYTHONUNBUFFERED=1
+
+# app.py sadrži WSGI objekat "app"
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
