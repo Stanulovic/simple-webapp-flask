@@ -7,7 +7,7 @@ app = Flask(__name__)
 def main():
     return """
     <h2>Zdravo, kako si?</h2>
-    <a href="/odgovor">Idi na odgovor</a>
+    <a href="/app1/odgovor">Idi na odgovor</a>
     """
 
 @app.route("/odgovor")
