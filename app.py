@@ -4,11 +4,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return "Veljko ne zna da igra elden ring, nikola je previse dobar."
+    return "Zdravo, kako si?"
 
-@app.route('/how are you')
+@app.route('/odgovor')
 def hello():
-    return 'I am good, how about you? :)'
+    return 'Ja sam odlicno, kako si ti?'
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
